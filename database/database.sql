@@ -36,14 +36,14 @@ CREATE TABLE IF NOT EXISTS products (
         ON DELETE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
--- Senha inicial: admin123. O login atualiza este hash para password_hash() no primeiro acesso.
+-- Contraseña inicial: admin123. El login actualiza este hash a password_hash() en el primer acceso.
 INSERT IGNORE INTO users (username, password) VALUES
 ('admin', SHA2('admin123', 256));
 
 INSERT IGNORE INTO categories (name) VALUES
 ('Proteínas'),
 ('Creatinas'),
-('Pre-entrenos'),
+('Preentrenos'),
 ('Accesorios'),
 ('Aminoácidos');
 
@@ -51,54 +51,54 @@ INSERT IGNORE INTO products (category_id, name, description, price, stock, image
 (
     (SELECT id FROM categories WHERE name = 'Proteínas'),
     'Whey Protein 900g',
-    'Suplemento proteico para auxiliar no ganho e manutencao de massa muscular.',
+    'Suplemento proteico para ayudar en el aumento y mantenimiento de masa muscular.',
     129.90,
     20,
-    'product-placeholder.svg',
+    'isolate.webp',
     1
 ),
 (
     (SELECT id FROM categories WHERE name = 'Creatinas'),
     'Creatina Monohidratada 300g',
-    'Creatina monohidratada para melhorar desempenho em treinos de alta intensidade.',
+    'Creatina monohidratada para mejorar el rendimiento en entrenamientos de alta intensidad.',
     79.90,
     30,
-    'product-placeholder.svg',
+    'creatina300.webp',
     1
 ),
 (
     (SELECT id FROM categories WHERE name = 'Creatinas'),
     'Creatina Monohidratada 1kg',
-    'Embalagem economica de creatina monohidratada para uso continuo.',
+    'Presentación económica de creatina monohidratada para uso continuo.',
     199.90,
     12,
-    'product-placeholder.svg',
+    'creatina1.webp',
     1
 ),
 (
     (SELECT id FROM categories WHERE name = 'Accesorios'),
     'Shaker',
-    'Coqueteleira pratica para preparar suplementos antes ou depois do treino.',
+    'Coctelera práctica para preparar suplementos antes o después del entrenamiento.',
     24.90,
     40,
-    'product-placeholder.svg',
+    'vaso.webp',
     1
 ),
 (
     (SELECT id FROM categories WHERE name = 'Aminoácidos'),
     'BCAA 60 cápsulas',
-    'Aminoacidos em capsulas para complementar a rotina esportiva.',
+    'Aminoácidos en cápsulas para complementar la rutina deportiva.',
     49.90,
     25,
-    'product-placeholder.svg',
+    'bcaa.webp',
     1
 ),
 (
     (SELECT id FROM categories WHERE name = 'Proteínas'),
-    'Mass Gainer 3kg',
-    'Hipercalorico indicado para dietas com maior necessidade calorica.',
+    'Anabolic Mass 28500 3kg',
+    'Hipercalórico indicado para dietas con mayor necesidad calórica.',
     149.90,
     15,
-    'product-placeholder.svg',
+    'anabolic.webp',
     1
 );

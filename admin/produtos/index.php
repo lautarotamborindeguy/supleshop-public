@@ -1,6 +1,6 @@
 <?php
 $baseUrl = '../../';
-$pageTitle = 'Listagem de produtos';
+$pageTitle = 'Listado de productos';
 
 require_once '../../includes/auth.php';
 require_once '../../includes/db.php';
@@ -41,42 +41,42 @@ require_once '../../includes/header.php';
     <section class="admin-section" aria-labelledby="products-title">
         <div class="admin-page-header">
             <div>
-                <span class="section-kicker">Produtos</span>
-                <h1 id="products-title">Listagem de produtos</h1>
+                <span class="section-kicker">Productos</span>
+                <h1 id="products-title">Listado de productos</h1>
             </div>
 
-            <a class="btn btn-primary" href="create.php">Novo produto</a>
+            <a class="btn btn-primary" href="create.php">Nuevo producto</a>
         </div>
 
         <form class="search-form" action="index.php" method="get">
-            <label for="search">Buscar por produto ou categoria</label>
+            <label for="search">Buscar por producto o categoría</label>
             <div class="search-row">
                 <input
                     type="search"
                     id="search"
                     name="search"
                     value="<?php echo htmlspecialchars($search); ?>"
-                    placeholder="Ex.: Whey, Creatinas"
+                    placeholder="Ej.: Whey, Creatinas"
                 >
                 <button class="btn btn-outline" type="submit">Buscar</button>
             </div>
         </form>
 
         <?php if (count($products) === 0): ?>
-            <p class="empty-message">Nenhum produto encontrado.</p>
+            <p class="empty-message">No se encontró ningún producto.</p>
         <?php else: ?>
             <div class="table-wrapper">
                 <table class="admin-table">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Imagem</th>
-                            <th>Nome</th>
-                            <th>Categoria</th>
-                            <th>Preco</th>
+                            <th>Imagen</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
                             <th>Stock</th>
                             <th>Estado</th>
-                            <th>Acoes</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,18 +91,18 @@ require_once '../../includes/header.php';
                                             alt="<?php echo htmlspecialchars($product['name']); ?>"
                                         >
                                     <?php else: ?>
-                                        <span class="image-placeholder">Sem imagem</span>
+                                        <span class="image-placeholder">Sin imagen</span>
                                     <?php endif; ?>
                                 </td>
                                 <td><?php echo htmlspecialchars($product['name']); ?></td>
                                 <td><?php echo htmlspecialchars($product['category_name']); ?></td>
-                                <td>R$ <?php echo number_format((float) $product['price'], 2, ',', '.'); ?></td>
+                                <td>$U <?php echo number_format((float) $product['price'], 2, ',', '.'); ?></td>
                                 <td><?php echo (int) $product['stock']; ?></td>
                                 <td>
                                     <?php if ((int) $product['active'] === 1): ?>
-                                        <span class="status-badge status-active">Ativo</span>
+                                        <span class="status-badge status-active">Activo</span>
                                     <?php else: ?>
-                                        <span class="status-badge status-inactive">Inativo</span>
+                                        <span class="status-badge status-inactive">Inactivo</span>
                                     <?php endif; ?>
                                 </td>
                                 <td>
@@ -111,9 +111,9 @@ require_once '../../includes/header.php';
                                         <a
                                             class="danger-link"
                                             href="delete.php?id=<?php echo $product['id']; ?>"
-                                            onclick="return confirm('Tem certeza que deseja excluir este produto?');"
+                                            onclick="return confirm('¿Seguro que deseas eliminar este producto?');"
                                         >
-                                            Excluir
+                                            Eliminar
                                         </a>
                                     </div>
                                 </td>

@@ -1,6 +1,6 @@
 <?php
 $baseUrl = '../../';
-$pageTitle = 'Cadastro de produto';
+$pageTitle = 'Crear producto';
 
 require_once '../../includes/auth.php';
 require_once '../../includes/db.php';
@@ -31,27 +31,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $product['active'] = isset($_POST['active']) ? 1 : 0;
 
     if ($product['name'] === '') {
-        $errors[] = 'Informe o nome do produto.';
+        $errors[] = 'Indica el nombre del producto.';
     }
 
     if ($product['description'] === '') {
-        $errors[] = 'Informe a descricao do produto.';
+        $errors[] = 'Indica la descripción del producto.';
     }
 
     if ($product['price'] === '' || !is_numeric($product['price']) || (float) $product['price'] <= 0) {
-        $errors[] = 'Informe um preco numerico maior que zero.';
+        $errors[] = 'Indica un precio numérico mayor que cero.';
     }
 
     if ($product['stock'] === '' || !is_numeric($product['stock']) || (int) $product['stock'] < 0) {
-        $errors[] = 'Informe um stock numerico maior ou igual a zero.';
+        $errors[] = 'Indica un stock numérico mayor o igual a cero.';
     }
 
     if ($product['category_id'] === '') {
-        $errors[] = 'Selecione uma categoria.';
+        $errors[] = 'Selecciona una categoría.';
     }
 
     if ($product['image'] === '') {
-        $errors[] = 'Informe o nome da imagem.';
+        $errors[] = 'Indica el nombre de la imagen.';
     }
 
     if (count($errors) === 0) {
@@ -75,7 +75,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header('Location: index.php');
             exit;
         } catch (PDOException $e) {
-            $errors[] = 'Nao foi possivel cadastrar o produto. Verifique os dados informados.';
+            $errors[] = 'No fue posible crear el producto. Verifica los datos ingresados.';
         }
     }
 }
@@ -87,11 +87,11 @@ require_once '../../includes/header.php';
     <section class="admin-section admin-form-section" aria-labelledby="create-title">
         <div class="admin-page-header">
             <div>
-                <span class="section-kicker">Produtos</span>
-                <h1 id="create-title">Cadastro de produto</h1>
+                <span class="section-kicker">Productos</span>
+                <h1 id="create-title">Crear producto</h1>
             </div>
 
-            <a class="btn btn-outline" href="index.php">Voltar</a>
+            <a class="btn btn-outline" href="index.php">Volver</a>
         </div>
 
         <?php if (count($errors) > 0): ?>
@@ -104,18 +104,18 @@ require_once '../../includes/header.php';
 
         <form class="form-card product-form" action="create.php" method="post">
             <div class="form-group">
-                <label for="name">Nome</label>
+                <label for="name">Nombre</label>
                 <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($product['name']); ?>" required>
             </div>
 
             <div class="form-group">
-                <label for="description">Descricao</label>
+                <label for="description">Descripción</label>
                 <textarea id="description" name="description" rows="5" required><?php echo htmlspecialchars($product['description']); ?></textarea>
             </div>
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="price">Preco</label>
+                    <label for="price">Precio</label>
                     <input type="number" id="price" name="price" step="0.01" min="0.01" value="<?php echo htmlspecialchars($product['price']); ?>" required>
                 </div>
 
@@ -127,9 +127,9 @@ require_once '../../includes/header.php';
 
             <div class="form-grid">
                 <div class="form-group">
-                    <label for="category_id">Categoria</label>
+                    <label for="category_id">Categoría</label>
                     <select id="category_id" name="category_id" required>
-                        <option value="">Selecione</option>
+                        <option value="">Selecciona</option>
                         <?php foreach ($categories as $category): ?>
                             <option
                                 value="<?php echo $category['id']; ?>"
@@ -142,17 +142,17 @@ require_once '../../includes/header.php';
                 </div>
 
                 <div class="form-group">
-                    <label for="image">Imagem</label>
-                    <input type="text" id="image" name="image" placeholder="produto.jpg" value="<?php echo htmlspecialchars($product['image']); ?>" required>
+                    <label for="image">Imagen</label>
+                    <input type="text" id="image" name="image" placeholder="producto.jpg" value="<?php echo htmlspecialchars($product['image']); ?>" required>
                 </div>
             </div>
 
             <label class="checkbox-field">
                 <input type="checkbox" name="active" value="1" <?php echo (int) $product['active'] === 1 ? 'checked' : ''; ?>>
-                Produto ativo
+                Producto activo
             </label>
 
-            <button class="btn btn-primary" type="submit">Salvar produto</button>
+            <button class="btn btn-primary" type="submit">Guardar producto</button>
         </form>
     </section>
 </main>

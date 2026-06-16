@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Carrinho';
+$pageTitle = 'Carrito';
 require_once 'includes/header.php';
 ?>
 
@@ -8,29 +8,29 @@ require_once 'includes/header.php';
         <div class="cart-header">
             <div>
                 <span class="section-kicker">Pedido</span>
-                <h1 id="cart-title">Carrinho de compras</h1>
-                <p>Revise os produtos escolhidos antes de finalizar o pedido.</p>
+                <h1 id="cart-title">Carrito de compras</h1>
+                <p>Revisa los productos elegidos antes de finalizar el pedido.</p>
             </div>
 
-            <a class="btn btn-outline" href="produtos.php">Voltar aos produtos</a>
+            <a class="btn btn-outline" href="produtos.php">Volver a productos</a>
         </div>
 
         <div class="cart-layout">
-            <section class="cart-items-panel" aria-label="Produtos no carrinho">
+            <section class="cart-items-panel" aria-label="Productos en el carrito">
                 <div id="cart-empty" class="cart-empty">
-                    <h2>Seu carrinho esta vazio</h2>
-                    <p>Adicione produtos no catalogo para montar seu pedido.</p>
-                    <a class="btn btn-primary" href="produtos.php">Ver produtos</a>
+                    <h2>Tu carrito está vacío</h2>
+                    <p>Agrega productos del catálogo para armar tu pedido.</p>
+                    <a class="btn btn-primary" href="produtos.php">Ver productos</a>
                 </div>
 
                 <div id="cart-items" class="cart-items"></div>
             </section>
 
-            <aside id="cart-summary" class="cart-summary" aria-label="Resumo do carrinho">
-                <h2>Resumo</h2>
+            <aside id="cart-summary" class="cart-summary" aria-label="Resumen del carrito">
+                <h2>Resumen</h2>
                 <div class="summary-row">
                     <span>Total</span>
-                    <strong id="cart-total">R$ 0,00</strong>
+                    <strong id="cart-total">$U 0,00</strong>
                 </div>
 
                 <a id="checkout-button" class="btn btn-primary" href="checkout.php">Finalizar pedido</a>

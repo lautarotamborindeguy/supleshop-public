@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Produtos';
+$pageTitle = 'Productos';
 
 require_once 'includes/db.php';
 
@@ -79,28 +79,28 @@ require_once 'includes/header.php';
     <section class="catalog-section" aria-labelledby="catalog-title">
         <div class="catalog-header">
             <div>
-                <span class="section-kicker">Catalogo</span>
-                <h1 id="catalog-title">Produtos SupleStore</h1>
-                <p>Escolha seus suplementos favoritos e adicione ao carrinho.</p>
+                <span class="section-kicker">Catálogo</span>
+                <h1 id="catalog-title">Productos SupleStore</h1>
+                <p>Elige tus suplementos favoritos y agrégalos al carrito.</p>
             </div>
         </div>
 
         <form class="catalog-filter-form" action="produtos.php" method="get">
             <div class="form-group">
-                <label for="search">Buscar produto</label>
+                <label for="search">Buscar producto</label>
                 <input
                     type="search"
                     id="search"
                     name="search"
                     value="<?php echo htmlspecialchars($search); ?>"
-                    placeholder="Nome, descricao ou categoria"
+                    placeholder="Nombre, descripción o categoría"
                 >
             </div>
 
             <div class="form-group">
-                <label for="category">Categoria</label>
+                <label for="category">Categoría</label>
                 <select id="category" name="category">
-                    <option value="">Todas as categorias</option>
+                    <option value="">Todas las categorías</option>
                     <?php foreach ($categories as $category): ?>
                         <option
                             value="<?php echo $category['id']; ?>"
@@ -116,9 +116,9 @@ require_once 'includes/header.php';
         </form>
 
         <?php if (count($products) === 0): ?>
-            <aside class="catalog-empty" aria-label="Sem resultados">
-                <h2>Nenhum produto encontrado</h2>
-                <p>Tente buscar por outro nome ou selecionar uma categoria diferente.</p>
+            <aside class="catalog-empty" aria-label="Sin resultados">
+                <h2>No se encontró ningún producto</h2>
+                <p>Intenta buscar otro nombre o seleccionar una categoría diferente.</p>
             </aside>
         <?php else: ?>
             <div class="products-grid">
@@ -126,6 +126,7 @@ require_once 'includes/header.php';
                     <?php
                     $price = (float) $product['price'];
                     $priceInCents = (int) round($price * 100);
+                    $stock = (int) $product['stock'];
                     ?>
 
                     <article class="product-card">
@@ -136,7 +137,7 @@ require_once 'includes/header.php';
                                     alt="<?php echo htmlspecialchars($product['name']); ?>"
                                 >
                             <?php else: ?>
-                                <span>Sem imagem</span>
+                                <span>Sin imagen</span>
                             <?php endif; ?>
                         </div>
 
@@ -148,8 +149,8 @@ require_once 'includes/header.php';
 
                         <div class="product-card-footer">
                             <div>
-                                <strong>R$ <?php echo number_format($price, 2, ',', '.'); ?></strong>
-                                <span>Stock: <?php echo (int) $product['stock']; ?></span>
+                                <strong>$U <?php echo number_format($price, 2, ',', '.'); ?></strong>
+                                <span>Stock: <?php echo $stock; ?></span>
                             </div>
 
                             <button
@@ -158,9 +159,11 @@ require_once 'includes/header.php';
                                 data-id="<?php echo $product['id']; ?>"
                                 data-name="<?php echo htmlspecialchars($product['name']); ?>"
                                 data-price="<?php echo $priceInCents; ?>"
+                                data-stock="<?php echo $stock; ?>"
                                 data-image="<?php echo htmlspecialchars($product['image']); ?>"
+                                <?php echo $stock <= 0 ? 'disabled' : ''; ?>
                             >
-                                Agregar al carrito
+                                <?php echo $stock <= 0 ? 'Sin stock' : 'Agregar al carrito'; ?>
                             </button>
                         </div>
                     </article>

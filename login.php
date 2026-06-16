@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Login';
+$pageTitle = 'Iniciar sesión';
 $error = '';
 $username = '';
 
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     if ($username === '' || $password === '') {
-        $error = 'Preencha usuario e senha.';
+        $error = 'Completa usuario y contraseña.';
     } else {
         $stmt = $pdo->prepare('SELECT id, username, password FROM users WHERE username = :username LIMIT 1');
         $stmt->bindValue(':username', $username);
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit;
         }
 
-        $error = 'Usuario ou senha incorretos.';
+        $error = 'Usuario o contraseña incorrectos.';
     }
 }
 
@@ -54,7 +54,7 @@ require_once 'includes/header.php';
 
 <main class="main-content page-shell">
     <section class="auth-section" aria-labelledby="login-title">
-        <h1 id="login-title">Login administrativo</h1>
+        <h1 id="login-title">Acceso administrativo</h1>
 
         <?php if ($error !== ''): ?>
             <p class="alert-error"><?php echo htmlspecialchars($error); ?></p>
@@ -73,7 +73,7 @@ require_once 'includes/header.php';
             </div>
 
             <div class="form-group">
-                <label for="password">Senha</label>
+                <label for="password">Contraseña</label>
                 <input
                     type="password"
                     id="password"

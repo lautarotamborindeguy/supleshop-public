@@ -24,10 +24,12 @@ function clearCart() {
 }
 
 function formatPrice(priceInCents) {
-    return (priceInCents / 100).toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL'
+    const price = (priceInCents / 100).toLocaleString('es-UY', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
     });
+
+    return `$U ${price}`;
 }
 
 function escapeHTML(value) {
@@ -75,15 +77,23 @@ function showCartMessage(message) {
 function addToCart(product) {
     const cart = getCart();
     const existingProduct = cart.find((item) => item.id === product.id);
+    const currentQuantity = existingProduct ? Number(existingProduct.quantity) || 0 : 0;
+
+    if (Number.isFinite(product.stock) && currentQuantity >= product.stock) {
+        showCartMessage('No hay más stock disponible para este producto.');
+        return;
+    }
 
     if (existingProduct) {
         existingProduct.quantity += 1;
+        existingProduct.stock = product.stock;
     } else {
         cart.push({
             id: product.id,
             name: product.name,
             price: product.price,
             image: product.image,
+            stock: product.stock,
             quantity: 1
         });
     }
@@ -91,7 +101,7 @@ function addToCart(product) {
     saveCart(cart);
     updateCartCount();
     renderCartPage();
-    showCartMessage('Produto adicionado ao carrinho.');
+    showCartMessage('Producto agregado al carrito.');
 }
 
 function captureAddCartButtons() {
@@ -103,11 +113,23 @@ function captureAddCartButtons() {
                 id: button.dataset.id,
                 name: button.dataset.name,
                 price: Number(button.dataset.price),
+                stock: Number(button.dataset.stock),
                 image: button.dataset.image
             };
 
-            if (!product.id || !product.name || !Number.isFinite(product.price) || product.price <= 0) {
-                showCartMessage('Nao foi possivel adicionar este produto.');
+            if (
+                !product.id ||
+                !product.name ||
+                !Number.isFinite(product.price) ||
+                product.price <= 0 ||
+                !Number.isFinite(product.stock)
+            ) {
+                showCartMessage('No fue posible agregar este producto.');
+                return;
+            }
+
+            if (product.stock <= 0) {
+                showCartMessage('Este producto no tiene stock disponible.');
                 return;
             }
 
@@ -122,6 +144,11 @@ function changeQuantity(productId, operation) {
     for (const item of cart) {
         if (item.id === productId) {
             if (operation === 'increase') {
+                if (Number.isFinite(item.stock) && item.quantity >= item.stock) {
+                    showCartMessage('No hay más stock disponible para este producto.');
+                    continue;
+                }
+
                 item.quantity += 1;
             }
 
@@ -129,7 +156,7 @@ function changeQuantity(productId, operation) {
                 if (item.quantity > 1) {
                     item.quantity -= 1;
                 } else {
-                    showCartMessage('Quantidade minima e 1. Use remover para excluir.');
+                    showCartMessage('La cantidad mínima es 1. Usa eliminar para quitarlo.');
                 }
             }
         }
@@ -147,7 +174,7 @@ function removeFromCart(productId) {
     saveCart(updatedCart);
     updateCartCount();
     renderCartPage();
-    showCartMessage('Produto removido do carrinho.');
+    showCartMessage('Producto eliminado del carrito.');
 }
 
 function createCartItem(item) {
@@ -160,15 +187,15 @@ function createCartItem(item) {
     article.className = 'cart-item';
     article.innerHTML = `
         <div class="cart-item-image">
-            ${item.image ? `<img src="assets/img/${productImage}" alt="${productName}">` : '<span>Sem imagem</span>'}
+            ${item.image ? `<img src="assets/img/${productImage}" alt="${productName}">` : '<span>Sin imagen</span>'}
         </div>
 
         <div class="cart-item-info">
             <h2>${productName}</h2>
-            <p>Preco unitario: ${formatPrice(item.price)}</p>
+            <p>Precio unitario: ${formatPrice(item.price)}</p>
         </div>
 
-        <div class="quantity-controls" aria-label="Quantidade">
+        <div class="quantity-controls" aria-label="Cantidad">
             <button type="button" class="quantity-btn" data-action="decrease" data-id="${productId}">-</button>
             <span>${item.quantity}</span>
             <button type="button" class="quantity-btn" data-action="increase" data-id="${productId}">+</button>
@@ -176,7 +203,7 @@ function createCartItem(item) {
 
         <strong class="cart-subtotal">${formatPrice(subtotal)}</strong>
 
-        <button type="button" class="remove-cart-item" data-id="${productId}">Remover</button>
+        <button type="button" class="remove-cart-item" data-id="${productId}">Eliminar</button>
     `;
 
     return article;
@@ -241,10 +268,10 @@ function captureCartPageActions() {
                 event.preventDefault();
 
                 if (checkoutMessage) {
-                    checkoutMessage.textContent = 'Adicione produtos antes de finalizar o pedido.';
+                    checkoutMessage.textContent = 'Agrega productos antes de finalizar el pedido.';
                 }
 
-                showCartMessage('Seu carrinho esta vazio.');
+                showCartMessage('Tu carrito está vacío.');
             }
         });
     }
@@ -319,31 +346,31 @@ function validateCheckout(customer, cart) {
     const phoneRegex = /^[0-9+\-()\s]{6,20}$/;
 
     if (cart.length === 0) {
-        errors.push('O carrinho esta vazio.');
+        errors.push('El carrito está vacío.');
     }
 
     if (customer.name === '') {
-        errors.push('Informe o nome completo.');
+        errors.push('Indica el nombre completo.');
     }
 
     if (customer.email === '') {
-        errors.push('Informe o email.');
+        errors.push('Indica el correo electrónico.');
     } else if (!emailRegex.test(customer.email)) {
-        errors.push('Informe um email valido.');
+        errors.push('Indica un correo electrónico válido.');
     }
 
     if (customer.phone === '') {
-        errors.push('Informe o telefone ou WhatsApp.');
+        errors.push('Indica el teléfono o WhatsApp.');
     } else if (!phoneRegex.test(customer.phone)) {
-        errors.push('Informe um telefone valido.');
+        errors.push('Indica un teléfono válido.');
     }
 
     if (customer.city === '') {
-        errors.push('Informe a cidade.');
+        errors.push('Indica la ciudad.');
     }
 
     if (customer.address === '') {
-        errors.push('Informe o endereco ou zona de entrega.');
+        errors.push('Indica la dirección o zona de entrega.');
     }
 
     return errors;
@@ -378,18 +405,51 @@ function showCheckoutErrors(errors) {
     errorsBox.appendChild(list);
 }
 
+async function processOrderStock(cart) {
+    const response = await fetch('checkout_process.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            items: cart.map((item) => ({
+                id: item.id,
+                quantity: item.quantity
+            }))
+        })
+    });
+
+    let result = null;
+
+    try {
+        result = await response.json();
+    } catch (error) {
+        throw new Error('No se pudo leer la respuesta del servidor.');
+    }
+
+    if (!response.ok || !result.success) {
+        const message = result.message || 'No fue posible procesar el pedido.';
+        const errors = Array.isArray(result.errors) ? result.errors : [];
+        const error = new Error(message);
+        error.details = errors;
+        throw error;
+    }
+
+    return result;
+}
+
 function generateOrderText(customer, cart) {
     const lines = [
-        'Novo pedido desde SupleStore',
+        'Nuevo pedido desde SupleStore',
         '',
-        'Dados do cliente:',
-        `Nome: ${customer.name}`,
-        `Email: ${customer.email}`,
-        `Telefone / WhatsApp: ${customer.phone}`,
-        `Cidade: ${customer.city}`,
-        `Endereco ou zona de entrega: ${customer.address}`,
+        'Datos del cliente:',
+        `Nombre: ${customer.name}`,
+        `Correo electrónico: ${customer.email}`,
+        `Teléfono / WhatsApp: ${customer.phone}`,
+        `Ciudad: ${customer.city}`,
+        `Dirección o zona de entrega: ${customer.address}`,
         '',
-        'Produtos:'
+        'Productos:'
     ];
 
     for (const item of cart) {
@@ -397,16 +457,16 @@ function generateOrderText(customer, cart) {
 
         lines.push(
             `- ${item.name}`,
-            `  Quantidade: ${item.quantity}`,
-            `  Preco unitario: ${formatPrice(item.price)}`,
+            `  Cantidad: ${item.quantity}`,
+            `  Precio unitario: ${formatPrice(item.price)}`,
             `  Subtotal: ${formatPrice(subtotal)}`
         );
     }
 
-    lines.push('', `Total geral: ${formatPrice(getCartTotal(cart))}`);
+    lines.push('', `Total general: ${formatPrice(getCartTotal(cart))}`);
 
     if (customer.comments !== '') {
-        lines.push('', 'Comentarios adicionais:', customer.comments);
+        lines.push('', 'Comentarios adicionales:', customer.comments);
     }
 
     return lines.join('\n');
@@ -415,12 +475,13 @@ function generateOrderText(customer, cart) {
 function captureCheckoutForm() {
     const checkoutForm = document.getElementById('checkout-form');
     const successBox = document.getElementById('checkout-success');
+    const submitButton = checkoutForm?.querySelector('button[type="submit"]');
 
     if (!checkoutForm) {
         return;
     }
 
-    checkoutForm.addEventListener('submit', (event) => {
+    checkoutForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const cart = getCart();
@@ -433,11 +494,36 @@ function captureCheckoutForm() {
             return;
         }
 
+        if (submitButton) {
+            submitButton.disabled = true;
+            submitButton.textContent = 'Procesando pedido...';
+        }
+
+        try {
+            await processOrderStock(cart);
+        } catch (error) {
+            const stockErrors = [error.message];
+
+            if (Array.isArray(error.details)) {
+                stockErrors.push(...error.details);
+            }
+
+            showCheckoutErrors(stockErrors);
+            showCartMessage('No fue posible completar el pedido.');
+
+            if (submitButton) {
+                submitButton.disabled = false;
+                submitButton.textContent = 'Enviar pedido';
+            }
+
+            return;
+        }
+
         const subject = 'Nuevo pedido desde SupleStore';
         const body = generateOrderText(customer, cart);
         const mailtoUrl = `mailto:tienda@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
-        // O pedido e enviado por email e a entrega/pagamento sao coordenados posteriormente com o cliente.
+        // El pedido se envía por correo electrónico y la entrega/pago se coordinan después con el cliente.
         window.location.href = mailtoUrl;
 
         clearCart();
@@ -445,10 +531,10 @@ function captureCheckoutForm() {
         renderCheckoutSummary();
 
         if (successBox) {
-            successBox.textContent = 'Pedido preparado com sucesso. Seu cliente de email sera aberto para envio.';
+            successBox.textContent = 'Pedido confirmado con éxito. Tu cliente de correo se abrirá para enviarlo.';
         }
 
-        showCartMessage('Pedido enviado para o cliente de email.');
+        showCartMessage('Pedido confirmado y stock actualizado.');
 
         setTimeout(() => {
             window.location.href = 'produtos.php';

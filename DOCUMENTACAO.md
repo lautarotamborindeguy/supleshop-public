@@ -4,197 +4,202 @@
 
 Lautaro Tamborindeguy
 
-## Objetivo do sistema
+## Objetivo del sistema
 
-SupleStore e um sistema web para uma loja de suplementos esportivos. O objetivo e permitir que visitantes vejam produtos ativos no catalogo, filtrem por categoria, adicionem itens ao carrinho e enviem um pedido por email. O sistema tambem possui uma area administrativa protegida por login para gerenciar produtos.
+SupleStore es un sistema web para una tienda de suplementos deportivos. El objetivo es permitir que los visitantes vean productos activos en el catálogo, filtren por categoría, agreguen ítems al carrito y envíen un pedido por correo electrónico. El sistema también incluye un área administrativa protegida por inicio de sesión para gestionar productos.
 
-## Tecnologias utilizadas
+## Tecnologías utilizadas
 
-- HTML5 semantico
+- HTML5 semántico
 - CSS3
 - JavaScript puro
 - PHP puro
 - MySQL
-- PDO para conexao com banco de dados
-- Sessoes PHP para login administrativo
-- localStorage para o carrinho
+- PDO para conexión con la base de datos
+- Sesiones PHP para login administrativo
+- localStorage para el carrito
 
 ## Funcionalidades
 
-- Home publica com apresentacao da loja.
-- Catalogo publico de produtos ativos.
-- Busca publica por nome, descricao ou categoria.
-- Filtro publico por categoria.
-- Carrinho de compras com JavaScript e localStorage.
-- Checkout por email usando `mailto:`.
-- Pagina Sobre.
-- Pagina Contato com validacao simples em JavaScript.
-- Login administrativo com sessao PHP.
-- Dashboard administrativo protegido.
-- CRUD completo de produtos:
-  - Cadastro
-  - Listagem
-  - Atualizacao
-  - Exclusao
-  - Busca
+- Inicio público con presentación de la tienda.
+- Catálogo público de productos activos.
+- Búsqueda pública por nombre, descripción o categoría.
+- Filtro público por categoría.
+- Carrito de compras con JavaScript y localStorage.
+- Confirmación de pedidos con descuento de stock y envío por correo electrónico usando `mailto:`.
+- Página Sobre.
+- Página Contacto con validación simple en JavaScript.
+- Acceso administrativo con sesión PHP.
+- Panel administrativo protegido.
+- CRUD completo de productos:
+  - Alta
+  - Listado
+  - Actualización
+  - Eliminación
+  - Búsqueda
 
-## Estrutura de paginas
+## Estructura de páginas
 
-- `index.php`: pagina inicial.
-- `produtos.php`: catalogo publico de produtos.
-- `carrinho.php`: carrinho de compras.
-- `checkout.php`: formulario final do pedido.
-- `sobre.php`: informacoes sobre o projeto e a loja.
-- `contato.php`: contato com validacao de campos.
-- `login.php`: login administrativo.
-- `logout.php`: encerramento da sessao.
-- `admin/dashboard.php`: painel administrativo.
-- `admin/produtos/index.php`: listagem e busca de produtos.
-- `admin/produtos/create.php`: cadastro de produto.
-- `admin/produtos/edit.php`: edicao de produto.
-- `admin/produtos/delete.php`: exclusao de produto.
+- `index.php`: página inicial.
+- `produtos.php`: catálogo público de productos.
+- `carrinho.php`: carrito de compras.
+- `checkout.php`: formulario final del pedido.
+- `checkout_process.php`: validación del carrito y descuento de stock.
+- `sobre.php`: información sobre el proyecto y la tienda.
+- `contato.php`: contacto con validación de campos.
+- `login.php`: acceso administrativo.
+- `logout.php`: cierre de sesión.
+- `admin/dashboard.php`: panel administrativo.
+- `admin/produtos/index.php`: listado y búsqueda de productos.
+- `admin/produtos/create.php`: alta de producto.
+- `admin/produtos/edit.php`: edición de producto.
+- `admin/produtos/delete.php`: eliminación de producto.
 
-## Estrutura do banco de dados
+## Estructura de la base de datos
 
-Banco de dados: `suple_store`
+Base de datos: `suple_store`
 
-### Tabela `users`
+### Tabla `users`
 
-- `id`: chave primaria.
-- `username`: nome do usuario administrador.
-- `password`: senha criptografada.
-- `created_at`: data de criacao.
+- `id`: clave primaria.
+- `username`: nombre del usuario administrador.
+- `password`: contraseña encriptada.
+- `created_at`: fecha de creación.
 
-### Tabela `categories`
+### Tabla `categories`
 
-- `id`: chave primaria.
-- `name`: nome da categoria.
-- `created_at`: data de criacao.
+- `id`: clave primaria.
+- `name`: nombre de la categoría.
+- `created_at`: fecha de creación.
 
-### Tabela `products`
+### Tabla `products`
 
-- `id`: chave primaria.
-- `category_id`: chave estrangeira para `categories.id`.
-- `name`: nome do produto.
-- `description`: descricao do produto.
-- `price`: preco.
-- `stock`: estoque.
-- `image`: nome do arquivo de imagem.
-- `active`: status do produto.
-- `created_at`: data de criacao.
+- `id`: clave primaria.
+- `category_id`: clave foránea hacia `categories.id`.
+- `name`: nombre del producto.
+- `description`: descripción del producto.
+- `price`: precio en pesos uruguayos (UYU).
+- `stock`: stock.
+- `image`: nombre del archivo de imagen.
+- `active`: estado del producto.
+- `created_at`: fecha de creación.
 
-## Relacionamento entre tabelas
+## Relación entre tablas
 
-A tabela `categories` se relaciona com a tabela `products` em uma relacao 1 para N.
+La tabla `categories` se relaciona con la tabla `products` en una relación 1 a N.
 
-Uma categoria pode ter varios produtos, mas cada produto pertence a apenas uma categoria.
+Una categoría puede tener varios productos, pero cada producto pertenece a una sola categoría.
 
-Exemplo:
+Ejemplo:
 
-- Categoria: Creatinas
-- Produtos: Creatina Monohidratada 300g, Creatina Monohidratada 1kg
+- Categoría: Creatinas
+- Productos: Creatina Monohidratada 300g, Creatina Monohidratada 1kg
 
-A chave estrangeira `products.category_id` referencia a chave primaria `categories.id`.
+La clave foránea `products.category_id` referencia la clave primaria `categories.id`.
 
-## Como executar localmente
+## Cómo ejecutar localmente
 
-1. Instalar um ambiente local com PHP e MySQL, como XAMPP, WAMP ou Laragon.
-2. Copiar a pasta do projeto para a pasta publica do servidor local.
-3. Criar o banco importando o arquivo `database/database.sql` no MySQL.
-4. Conferir os dados de conexao em `includes/db.php`:
+1. Instalar un entorno local con PHP y MySQL, como XAMPP, WAMP o Laragon.
+2. Copiar la carpeta del proyecto en la carpeta pública del servidor local.
+3. Crear la base de datos importando el archivo `database/database.sql` en MySQL.
+4. Revisar los datos de conexión en `includes/db.php`:
    - host: `localhost`
-   - banco: `suple_store`
+   - base de datos: `suple_store`
    - usuario: `root`
-   - senha: vazia por padrao
-5. Acessar `index.php` pelo navegador.
-6. Para acessar o painel administrativo:
+   - contraseña: vacía por defecto
+5. Acceder a `index.php` desde el navegador.
+6. Para acceder al panel administrativo:
    - URL: `login.php`
    - Usuario: `admin`
-   - Senha: `admin123`
+   - Contraseña: `admin123`
 
-## Prints do sistema
+## Capturas del sistema
 
-### Home
+### Inicio
 
-Inserir print da Home.
+Insertar captura del Inicio.
 
-### Catalogo publico
+### Catálogo público
 
-Inserir print do catalogo de produtos.
+Insertar captura del catálogo de productos.
 
-### Carrinho
+### Carrito
 
-Inserir print do carrinho.
+Insertar captura del carrito.
 
-### Checkout
+### Finalizar pedido
 
-Inserir print do checkout.
+Insertar captura de la pantalla para finalizar el pedido.
 
-### Login administrativo
+### Acceso administrativo
 
-Inserir print do login administrativo.
+Insertar captura del acceso administrativo.
 
-### CRUD de produtos
+### CRUD de productos
 
-Inserir print do CRUD.
+Insertar captura del CRUD.
 
-## Funcionamento do carrinho
+## Funcionamiento del carrito y checkout
 
-O carrinho e controlado pelo arquivo `assets/js/cart.js`. Quando o usuario clica em "Agregar al carrito", o JavaScript le os atributos `data-id`, `data-name`, `data-price` e `data-image` do botao.
+El carrito es controlado por el archivo `assets/js/cart.js`. Cuando el usuario hace clic en "Agregar al carrito", JavaScript lee los atributos `data-id`, `data-name`, `data-price`, `data-stock` y `data-image` del botón.
 
-Os produtos sao guardados em um array de objetos com:
+Los productos se guardan en un array de objetos con:
 
 - `id`
 - `name`
 - `price`
+- `stock`
 - `image`
 - `quantity`
 
-Esse array e salvo no `localStorage`, por isso o carrinho continua disponivel ao navegar entre paginas. O JavaScript tambem atualiza o contador do carrinho, renderiza os itens em `carrinho.php`, recalcula subtotais e total geral.
+Ese array se guarda en `localStorage`, por eso el carrito sigue disponible al navegar entre páginas. JavaScript también actualiza el contador del carrito, renderiza los ítems en `carrinho.php`, recalcula subtotales y total general.
 
-## Funcionamento do login administrativo
+Al finalizar el pedido, `assets/js/cart.js` envía los productos a `checkout_process.php`. Ese endpoint valida que los productos existan, revisa que haya stock suficiente y descuenta las cantidades en MySQL dentro de una transacción. Si no hay stock suficiente, el pedido se bloquea y el carrito no se limpia. Si el stock se actualiza correctamente, el sistema abre el cliente de correo con el detalle del pedido.
 
-O login fica em `login.php`. O sistema consulta a tabela `users` usando PDO e verifica a senha com `password_verify()`.
+## Funcionamiento del acceso administrativo
 
-Quando o login esta correto, o PHP cria variaveis de sessao:
+El acceso administrativo está en `login.php`. El sistema consulta la tabla `users` usando PDO y verifica la contraseña con `password_verify()`.
+
+Cuando el acceso es correcto, PHP crea variables de sesión:
 
 - `$_SESSION['user_id']`
 - `$_SESSION['username']`
 
-As paginas administrativas usam `requireLogin()` do arquivo `includes/auth.php`. Se nao existir usuario logado, o sistema redireciona para `login.php`.
+Las páginas administrativas usan `requireLogin()` del archivo `includes/auth.php`. Si no existe un usuario con sesión iniciada, el sistema redirige a `login.php`.
 
-## Validacoes implementadas
+## Validaciones implementadas
 
-- Campos vazios no login.
-- Campos vazios no cadastro e edicao de produtos.
-- Preco numerico e maior que zero.
-- Estoque numerico e maior ou igual a zero.
-- Email valido no checkout.
-- Telefone valido no checkout.
-- Carrinho vazio bloqueado no checkout.
-- Formulario de contato com validacao de campos e email.
+- Campos vacíos en el acceso administrativo.
+- Campos vacíos en el alta y la edición de productos.
+- Precio numérico y mayor que cero.
+- Stock numérico y mayor o igual a cero.
+- Correo electrónico válido al finalizar el pedido.
+- Teléfono válido en el checkout.
+- Carrito vacío bloqueado en el checkout.
+- Stock suficiente antes de confirmar el pedido.
+- Formulario de contacto con validación de campos y correo electrónico.
 
-## Melhorias futuras
+## Mejoras futuras
 
-- Guardar pedidos em MySQL.
-- Criar combos de produtos.
-- Agregar metodo de pago.
-- Upload real de imagens.
-- Dashboard com estatisticas.
+- Guardar pedidos en MySQL.
+- Crear combos de productos.
+- Agregar método de pago.
+- Carga real de imágenes.
+- Panel con estadísticas.
 
-## Checklist da consigna
+## Checklist de la consigna
 
-- HTML5 semantico: atendido.
-- `header`, `nav`, `main`, `section`, `article`, `aside`, `footer`: atendido.
-- CSS3 com classes, IDs, Box Model, Flexbox, posicionamento, hover e responsividade: atendido.
-- JavaScript com variaveis, operadores, decisoes, repeticoes, arrays, funcoes, objetos, DOM, eventos e validacoes: atendido.
-- PHP e MySQL: atendido.
-- PDO: atendido.
-- Minimo 2 tabelas relacionadas: atendido com `categories` e `products`.
-- Chave primaria e chave estrangeira: atendido.
-- Login administrativo com sessoes: atendido.
-- CRUD completo de produtos: atendido.
-- Cadastro, listagem, atualizacao, exclusao e busca: atendido.
-- Home, Cadastro, Listagem, Sobre e Contato: atendido.
-- Carrinho com localStorage: atendido.
-- Checkout por email com `mailto:`: atendido.
+- HTML5 semántico: cumplido.
+- `header`, `nav`, `main`, `section`, `article`, `aside`, `footer`: cumplido.
+- CSS3 con clases, IDs, Box Model, Flexbox, posicionamiento, hover y responsividad: cumplido.
+- JavaScript con variables, operadores, decisiones, repeticiones, arrays, funciones, objetos, DOM, eventos y validaciones: cumplido.
+- PHP y MySQL: cumplido.
+- PDO: cumplido.
+- Mínimo 2 tablas relacionadas: cumplido con `categories` y `products`.
+- Clave primaria y clave foránea: cumplido.
+- Acceso administrativo con sesiones: cumplido.
+- CRUD completo de productos: cumplido.
+- Alta, listado, actualización, eliminación y búsqueda: cumplido.
+- Inicio, alta, listado, Sobre y Contacto: cumplido.
+- Carrito con localStorage: cumplido.
+- Confirmación de pedidos con descuento de stock y envío por correo electrónico con `mailto:`: cumplido.

@@ -15,18 +15,18 @@ function validateContactForm() {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if (name === '' || email === '' || text === '') {
-            messageBox.textContent = 'Preencha todos os campos do contato.';
+            messageBox.textContent = 'Completa todos los campos de contacto.';
             messageBox.className = 'alert-error';
             return;
         }
 
         if (!emailRegex.test(email)) {
-            messageBox.textContent = 'Informe um email valido.';
+            messageBox.textContent = 'Indica un correo electrónico válido.';
             messageBox.className = 'alert-error';
             return;
         }
 
-        messageBox.textContent = 'Mensagem validada com sucesso. Este formulario e demonstrativo.';
+        messageBox.textContent = 'Mensaje validado con éxito. Este formulario es demostrativo.';
         messageBox.className = 'checkout-success';
         form.reset();
     });

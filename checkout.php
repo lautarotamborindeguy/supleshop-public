@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Checkout';
+$pageTitle = 'Finalizar pedido';
 require_once 'includes/header.php';
 ?>
 
@@ -8,67 +8,67 @@ require_once 'includes/header.php';
         <div class="checkout-header">
             <div>
                 <span class="section-kicker">Finalizar pedido</span>
-                <h1 id="checkout-title">Checkout</h1>
-                <p>Confira o resumo e envie seu pedido por email para a loja.</p>
+                <h1 id="checkout-title">Finalizar pedido</h1>
+                <p>Revisa el resumen y envía tu pedido por correo electrónico a la tienda.</p>
             </div>
 
-            <a class="btn btn-outline" href="carrinho.php">Voltar ao carrinho</a>
+            <a class="btn btn-outline" href="carrinho.php">Volver al carrito</a>
         </div>
 
         <div class="checkout-layout">
-            <aside class="checkout-summary" aria-label="Resumo do pedido">
-                <h2>Resumo do pedido</h2>
+            <aside class="checkout-summary" aria-label="Resumen del pedido">
+                <h2>Resumen del pedido</h2>
                 <div id="checkout-empty" class="checkout-empty">
-                    <p>Seu carrinho esta vazio.</p>
-                    <a class="btn btn-primary" href="produtos.php">Ver produtos</a>
+                    <p>Tu carrito está vacío.</p>
+                    <a class="btn btn-primary" href="produtos.php">Ver productos</a>
                 </div>
 
                 <div id="checkout-items" class="checkout-items"></div>
 
                 <div class="summary-row checkout-total-row">
-                    <span>Total geral</span>
-                    <strong id="checkout-total">R$ 0,00</strong>
+                    <span>Total general</span>
+                    <strong id="checkout-total">$U 0,00</strong>
                 </div>
             </aside>
 
             <article class="checkout-form-panel">
-                <h2>Dados do cliente</h2>
+                <h2>Datos del cliente</h2>
 
                 <div id="checkout-errors" class="checkout-errors" aria-live="polite"></div>
                 <div id="checkout-success" class="checkout-success" aria-live="polite"></div>
 
                 <form id="checkout-form" class="form-card checkout-form" action="#" method="post" novalidate>
                     <div class="form-group">
-                        <label for="customer-name">Nome completo</label>
+                        <label for="customer-name">Nombre completo</label>
                         <input type="text" id="customer-name" name="customer_name" required>
                     </div>
 
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="customer-email">Email</label>
+                            <label for="customer-email">Correo electrónico</label>
                             <input type="email" id="customer-email" name="customer_email" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="customer-phone">Telefone / WhatsApp</label>
+                            <label for="customer-phone">Teléfono / WhatsApp</label>
                             <input type="tel" id="customer-phone" name="customer_phone" required>
                         </div>
                     </div>
 
                     <div class="form-grid">
                         <div class="form-group">
-                            <label for="customer-city">Cidade</label>
+                            <label for="customer-city">Ciudad</label>
                             <input type="text" id="customer-city" name="customer_city" required>
                         </div>
 
                         <div class="form-group">
-                            <label for="customer-address">Endereco ou zona de entrega</label>
+                            <label for="customer-address">Dirección o zona de entrega</label>
                             <input type="text" id="customer-address" name="customer_address" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="customer-comments">Comentarios adicionais</label>
+                        <label for="customer-comments">Comentarios adicionales</label>
                         <textarea id="customer-comments" name="customer_comments" rows="4"></textarea>
                     </div>
 
