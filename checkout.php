@@ -9,7 +9,7 @@ require_once 'includes/header.php';
             <div>
                 <span class="section-kicker">Finalizar pedido</span>
                 <h1 id="checkout-title">Finalizar pedido</h1>
-                <p>Revisa el resumen y envía tu pedido por correo electrónico a la tienda.</p>
+                <p>Revisa el resumen y envía el pedido por WhatsApp a la tienda.</p>
             </div>
 
             <a class="btn btn-outline" href="carrinho.php">Volver al carrito</a>
@@ -43,16 +43,9 @@ require_once 'includes/header.php';
                         <input type="text" id="customer-name" name="customer_name" required>
                     </div>
 
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="customer-email">Correo electrónico</label>
-                            <input type="email" id="customer-email" name="customer_email" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="customer-phone">Teléfono / WhatsApp</label>
-                            <input type="tel" id="customer-phone" name="customer_phone" required>
-                        </div>
+                    <div class="form-group">
+                        <label for="customer-phone">Teléfono / WhatsApp</label>
+                        <input type="tel" id="customer-phone" name="customer_phone" required>
                     </div>
 
                     <div class="form-grid">
@@ -72,7 +65,7 @@ require_once 'includes/header.php';
                         <textarea id="customer-comments" name="customer_comments" rows="4"></textarea>
                     </div>
 
-                    <button class="btn btn-primary" type="submit">Enviar pedido</button>
+                    <button class="btn btn-primary" type="submit">Enviar por WhatsApp</button>
                 </form>
             </article>
         </div>

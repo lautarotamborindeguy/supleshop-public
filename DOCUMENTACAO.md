@@ -6,7 +6,7 @@ Lautaro Tamborindeguy
 
 ## Objetivo del sistema
 
-SupleStore es un sistema web para una tienda de suplementos deportivos. El objetivo es permitir que los visitantes vean productos activos en el catálogo, filtren por categoría, agreguen ítems al carrito y envíen un pedido por correo electrónico. El sistema también incluye un área administrativa protegida por inicio de sesión para gestionar productos.
+SupleStore es un sistema web para una tienda de suplementos deportivos. El objetivo es permitir que los visitantes vean productos activos en el catálogo, filtren por categoría, agreguen ítems al carrito y envíen un pedido por WhatsApp. El sistema también incluye un área administrativa protegida por inicio de sesión para gestionar productos.
 
 ## Tecnologías utilizadas
 
@@ -26,7 +26,7 @@ SupleStore es un sistema web para una tienda de suplementos deportivos. El objet
 - Búsqueda pública por nombre, descripción o categoría.
 - Filtro público por categoría.
 - Carrito de compras con JavaScript y localStorage.
-- Confirmación de pedidos con descuento de stock y envío por correo electrónico usando `mailto:`.
+- Confirmación de pedidos con descuento de stock y envío por WhatsApp.
 - Página Sobre.
 - Página Contacto con validación simple en JavaScript.
 - Acceso administrativo con sesión PHP.
@@ -154,7 +154,9 @@ Los productos se guardan en un array de objetos con:
 
 Ese array se guarda en `localStorage`, por eso el carrito sigue disponible al navegar entre páginas. JavaScript también actualiza el contador del carrito, renderiza los ítems en `carrinho.php`, recalcula subtotales y total general.
 
-Al finalizar el pedido, `assets/js/cart.js` envía los productos a `checkout_process.php`. Ese endpoint valida que los productos existan, revisa que haya stock suficiente y descuenta las cantidades en MySQL dentro de una transacción. Si no hay stock suficiente, el pedido se bloquea y el carrito no se limpia. Si el stock se actualiza correctamente, el sistema abre el cliente de correo con el detalle del pedido.
+Al finalizar el pedido, `assets/js/cart.js` envía los productos a `checkout_process.php`. Ese endpoint valida que los productos existan, revisa que haya stock suficiente y descuenta las cantidades en MySQL dentro de una transacción. Si no hay stock suficiente, el pedido se bloquea y el carrito no se limpia. Si el stock se actualiza correctamente, el sistema abre WhatsApp con el detalle del pedido precargado.
+
+Para abrir WhatsApp directamente al número de la tienda, completar `STORE_WHATSAPP_PHONE` en `assets/js/cart.js` con el número internacional sin `+`, espacios ni guiones. Si queda vacío, WhatsApp abre el selector de chat con el pedido precargado.
 
 ## Funcionamiento del acceso administrativo
 
@@ -202,4 +204,4 @@ Las páginas administrativas usan `requireLogin()` del archivo `includes/auth.ph
 - Alta, listado, actualización, eliminación y búsqueda: cumplido.
 - Inicio, alta, listado, Sobre y Contacto: cumplido.
 - Carrito con localStorage: cumplido.
-- Confirmación de pedidos con descuento de stock y envío por correo electrónico con `mailto:`: cumplido.
+- Confirmación de pedidos con descuento de stock y envío por WhatsApp: cumplido.

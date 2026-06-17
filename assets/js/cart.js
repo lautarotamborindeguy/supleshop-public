@@ -1,4 +1,6 @@
 const CART_KEY = 'supleStoreCart';
+// Número internacional sin + ni espacios. Si queda vacío, WhatsApp permite elegir el chat.
+const STORE_WHATSAPP_PHONE = '59898307550';
 
 function getCart() {
     const savedCart = localStorage.getItem(CART_KEY);
@@ -332,7 +334,6 @@ function renderCheckoutSummary() {
 function getCheckoutCustomerData() {
     return {
         name: document.getElementById('customer-name')?.value.trim() || '',
-        email: document.getElementById('customer-email')?.value.trim() || '',
         phone: document.getElementById('customer-phone')?.value.trim() || '',
         city: document.getElementById('customer-city')?.value.trim() || '',
         address: document.getElementById('customer-address')?.value.trim() || '',
@@ -342,7 +343,6 @@ function getCheckoutCustomerData() {
 
 function validateCheckout(customer, cart) {
     const errors = [];
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const phoneRegex = /^[0-9+\-()\s]{6,20}$/;
 
     if (cart.length === 0) {
@@ -351,12 +351,6 @@ function validateCheckout(customer, cart) {
 
     if (customer.name === '') {
         errors.push('Indica el nombre completo.');
-    }
-
-    if (customer.email === '') {
-        errors.push('Indica el correo electrónico.');
-    } else if (!emailRegex.test(customer.email)) {
-        errors.push('Indica un correo electrónico válido.');
     }
 
     if (customer.phone === '') {
@@ -440,11 +434,10 @@ async function processOrderStock(cart) {
 
 function generateOrderText(customer, cart) {
     const lines = [
-        'Nuevo pedido desde SupleStore',
+        'Hola, quiero realizar este pedido en SupleStore:',
         '',
         'Datos del cliente:',
         `Nombre: ${customer.name}`,
-        `Correo electrónico: ${customer.email}`,
         `Teléfono / WhatsApp: ${customer.phone}`,
         `Ciudad: ${customer.city}`,
         `Dirección o zona de entrega: ${customer.address}`,
@@ -470,6 +463,17 @@ function generateOrderText(customer, cart) {
     }
 
     return lines.join('\n');
+}
+
+function buildWhatsAppUrl(message) {
+    const phone = STORE_WHATSAPP_PHONE.replace(/\D/g, '');
+    const text = encodeURIComponent(message);
+
+    if (phone !== '') {
+        return `https://wa.me/${phone}?text=${text}`;
+    }
+
+    return `https://wa.me/?text=${text}`;
 }
 
 function captureCheckoutForm() {
@@ -513,32 +517,28 @@ function captureCheckoutForm() {
 
             if (submitButton) {
                 submitButton.disabled = false;
-                submitButton.textContent = 'Enviar pedido';
+                submitButton.textContent = 'Enviar por WhatsApp';
             }
 
             return;
         }
 
-        const subject = 'Nuevo pedido desde SupleStore';
         const body = generateOrderText(customer, cart);
-        const mailtoUrl = `mailto:tienda@example.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-        // El pedido se envía por correo electrónico y la entrega/pago se coordinan después con el cliente.
-        window.location.href = mailtoUrl;
+        const whatsappUrl = buildWhatsAppUrl(body);
 
         clearCart();
         updateCartCount();
         renderCheckoutSummary();
 
         if (successBox) {
-            successBox.textContent = 'Pedido confirmado con éxito. Tu cliente de correo se abrirá para enviarlo.';
+            successBox.textContent = 'Pedido confirmado con éxito. WhatsApp se abrirá con el detalle del pedido.';
         }
 
-        showCartMessage('Pedido confirmado y stock actualizado.');
+        showCartMessage('Pedido confirmado. Abriendo WhatsApp...');
 
         setTimeout(() => {
-            window.location.href = 'produtos.php';
-        }, 4500);
+            window.location.href = whatsappUrl;
+        }, 700);
     });
 }
 

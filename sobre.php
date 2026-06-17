@@ -19,7 +19,7 @@ require_once 'includes/header.php';
                 <h2>Objetivo</h2>
                 <p>
                     Presentar productos por categorías, permitir búsquedas en el catálogo y armar pedidos
-                    por email de forma simple.
+                    por WhatsApp de forma simple.
                 </p>
             </article>
 
