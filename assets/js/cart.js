@@ -1,5 +1,4 @@
 const CART_KEY = 'supleStoreCart';
-// Número internacional sin + ni espacios. Si queda vacío, WhatsApp permite elegir el chat.
 const STORE_WHATSAPP_PHONE = '59898307550';
 
 function getCart() {

@@ -40,6 +40,8 @@ SupleStore es un sistema web para una tienda de suplementos deportivos. El objet
 
 ## Estructura de páginas
 
+Las páginas principales usan extensión `.php` porque combinan HTML5 semántico con recursos de backend en PHP, como includes, sesiones y conexión con MySQL.
+
 - `index.php`: página inicial.
 - `produtos.php`: catálogo público de productos.
 - `carrinho.php`: carrito de compras.
@@ -117,27 +119,27 @@ La clave foránea `products.category_id` referencia la clave primaria `categorie
 
 ### Inicio
 
-Insertar captura del Inicio.
+Captura del Inicio.
 
 ### Catálogo público
 
-Insertar captura del catálogo de productos.
+Captura del catálogo de productos.
 
 ### Carrito
 
-Insertar captura del carrito.
+Captura del carrito.
 
 ### Finalizar pedido
 
-Insertar captura de la pantalla para finalizar el pedido.
+Captura de la pantalla para finalizar el pedido.
 
 ### Acceso administrativo
 
-Insertar captura del acceso administrativo.
+Captura del acceso administrativo.
 
 ### CRUD de productos
 
-Insertar captura del CRUD.
+Captura del CRUD.
 
 ## Funcionamiento del carrito y checkout
 
@@ -156,7 +158,7 @@ Ese array se guarda en `localStorage`, por eso el carrito sigue disponible al na
 
 Al finalizar el pedido, `assets/js/cart.js` envía los productos a `checkout_process.php`. Ese endpoint valida que los productos existan, revisa que haya stock suficiente y descuenta las cantidades en MySQL dentro de una transacción. Si no hay stock suficiente, el pedido se bloquea y el carrito no se limpia. Si el stock se actualiza correctamente, el sistema abre WhatsApp con el detalle del pedido precargado.
 
-Para abrir WhatsApp directamente al número de la tienda, completar `STORE_WHATSAPP_PHONE` en `assets/js/cart.js` con el número internacional sin `+`, espacios ni guiones. Si queda vacío, WhatsApp abre el selector de chat con el pedido precargado.
+El número de WhatsApp de la tienda está definido en `assets/js/cart.js` mediante la constante `STORE_WHATSAPP_PHONE`.
 
 ## Funcionamiento del acceso administrativo
 

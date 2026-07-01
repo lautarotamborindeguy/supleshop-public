@@ -1,5 +1,4 @@
 <?php
-// Inicia la sesión solo cuando todavía no fue iniciada.
 function startSession(): void
 {
     if (session_status() === PHP_SESSION_NONE) {
@@ -7,7 +6,6 @@ function startSession(): void
     }
 }
 
-// Protege páginas privadas del panel administrativo.
 function requireLogin(string $loginPath = '../login.php'): void
 {
     startSession();

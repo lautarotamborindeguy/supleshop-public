@@ -51,14 +51,9 @@ require_once '../../includes/header.php';
         <form class="search-form" action="index.php" method="get">
             <label for="search">Buscar por producto o categoría</label>
             <div class="search-row">
-                <input
-                    type="search"
-                    id="search"
-                    name="search"
-                    value="<?php echo htmlspecialchars($search); ?>"
-                    placeholder="Ej.: Whey, Creatinas"
-                >
-                <button class="btn btn-outline" type="submit">Buscar</button>
+                <input type="search" id="search" name="search" value="<?php echo htmlspecialchars($search); ?>"
+                    placeholder="Ej.: Whey, Creatinas">
+                <button class="btn" type="submit">Buscar</button>
             </div>
         </form>
 
@@ -85,11 +80,9 @@ require_once '../../includes/header.php';
                                 <td><?php echo $product['id']; ?></td>
                                 <td>
                                     <?php if (!empty($product['image'])): ?>
-                                        <img
-                                            class="product-thumb"
+                                        <img class="product-thumb"
                                             src="../../assets/img/<?php echo htmlspecialchars($product['image']); ?>"
-                                            alt="<?php echo htmlspecialchars($product['name']); ?>"
-                                        >
+                                            alt="<?php echo htmlspecialchars($product['name']); ?>">
                                     <?php else: ?>
                                         <span class="image-placeholder">Sin imagen</span>
                                     <?php endif; ?>
@@ -108,11 +101,8 @@ require_once '../../includes/header.php';
                                 <td>
                                     <div class="table-actions">
                                         <a href="edit.php?id=<?php echo $product['id']; ?>">Editar</a>
-                                        <a
-                                            class="danger-link"
-                                            href="delete.php?id=<?php echo $product['id']; ?>"
-                                            onclick="return confirm('¿Seguro que deseas eliminar este producto?');"
-                                        >
+                                        <a class="danger-link" href="delete.php?id=<?php echo $product['id']; ?>"
+                                            onclick="return confirm('¿Seguro que deseas eliminar este producto?');">
                                             Eliminar
                                         </a>
                                     </div>
